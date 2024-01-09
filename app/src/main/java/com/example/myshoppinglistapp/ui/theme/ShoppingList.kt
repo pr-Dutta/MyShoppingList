@@ -2,6 +2,7 @@ package com.example.myshoppinglistapp.ui.theme
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -68,21 +69,51 @@ fun ShoppingListApp() {
     // (07-01-2024) - Have to revise
     if (showDialog) {
         AlertDialog(onDismissRequest = { showDialog = false },
-            confirmButton = { /*TODO*/ },
+            confirmButton = {                                       // (09-01-2024)
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween) {
+                    Button(onClick = {
+                        if (itemName.isNotBlank()) {
+                            val newItem = ShoppingItem(
+                                id = sItems.size+1,
+                                name = itemName,
+                                quantity = itemQuantity.toInt()
+                            )
+                            sItems = sItems + newItem
+                            showDialog = false
+                            itemName = ""
+                        }
+                    }) {
+                        Text(text = "Add")
+                    }
+                    Button(onClick = {
+                        showDialog = false
+                    }) {
+                        Text(text = "Cancel")
+                    }
+                }
+            },
             title = { Text("Add Shopping Item") },
+            // Here we miss use the text composable
             text = {
                 Column {
                     OutlinedTextField(
                         value = itemName,
                         onValueChange = { itemName = it },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth().padding(8.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
                         )
                     OutlinedTextField(
                         value = itemQuantity,
                         onValueChange = { itemQuantity = it },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth().padding(8.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
                         )
                     }
                 }
