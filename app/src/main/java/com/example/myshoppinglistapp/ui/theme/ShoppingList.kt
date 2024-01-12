@@ -11,9 +11,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -64,7 +69,8 @@ fun ShoppingListApp() {
              * for dynamically loading and rendering only the items that
              * are currently visible on the screen*/
             items(sItems) {
-                ShoppingListItem(it, {},{}) // (10-01-2024) What the hell is going on here just understood.
+                // How it represents shoppingItem?
+                ShoppingListItem(it, {},{}) // (11-01-2024) What the hell is going on here just understood.
             }
         }
     }
@@ -78,7 +84,7 @@ fun ShoppingListApp() {
                     .fillMaxWidth()
                     .padding(8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween) {
-                    Button(onClick = {
+                    Button(onClick = {  // onClick is an lambda function - (11-01-2024)
                         if (itemName.isNotBlank()) {
                             val newItem = ShoppingItem(
                                 id = sItems.size+1,
@@ -90,8 +96,13 @@ fun ShoppingListApp() {
                             itemName = ""
                         }
                     }) {
-                        Text(text = "Add")
-                    }
+                        //val doubleNumber: (Int) -> Int = { it * 2 }     // lambda expression (12-01-2024)
+                        //Text(text = doubleNumber(5).toString())
+
+                        /* Don't do this type on calculation
+                        * inside UI element, it may  freeze your UI */
+
+                        Text(text = "Add")                    }
                     Button(onClick = {
                         showDialog = false
                     }) {
@@ -126,12 +137,13 @@ fun ShoppingListApp() {
 }
 
 
+// (11-01-2024)
 @Composable
 /* Here we can pass function and that function will be executed
 * when the ShoppingListItem() fun will call */
 fun ShoppingListItem(
     item: ShoppingItem,
-    onEditClick: () -> Unit,        //This is a lambda function - have to learn ask chatGpt?
+    onEditClick: () -> Unit,        //This is a lambda function - have to learn ask chatGpt? - Done
     onDeleteClick: () -> Unit
 ) {
     Row(
@@ -139,11 +151,24 @@ fun ShoppingListItem(
             .fillMaxWidth()
             .padding(8.dp)
             .border(
+                // BorderStroke is a Composable and it creates Border around UI elements. (11-01-2024)
                 border = BorderStroke(2.dp, Color(0XFF018786)),
                 shape = RoundedCornerShape(20)
             )
     ) {
+
+        //  (12-01-2024)
+
         Text(text = item.name, Modifier.padding(8.dp))  // 8.dp are preferred to position items
+        Text(text = "Qty: ${item.quantity}", Modifier.padding(8.dp))
+        Row(modifier = Modifier.padding(8.dp)) {
+            IconButton(onClick = onEditClick) {
+                Icon(imageVector = Icons.Default.Edit, contentDescription = null)
+            }
+            IconButton(onClick = onDeleteClick) {
+                Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+            }
+        }
     }
 }
 
