@@ -136,6 +136,16 @@ fun ShoppingListApp() {
     }
 }
 
+// (13-01-2024)
+@Composable
+fun ShoppingItemEditor(
+    item: ShoppingItem,
+   onEditComplete: (String, Int) -> Unit) {
+
+    val editedName by remember { mutableStateOf(item.name) }
+    val editedQuantity by remember { mutableStateOf(item.quantity.toString()) }
+    val isEditing by remember { mutableStateOf(item.isEditing) }
+}
 
 // (11-01-2024)
 @Composable
@@ -157,15 +167,24 @@ fun ShoppingListItem(
             )
     ) {
 
-        //  (12-01-2024)
+        // (12-01-2024)
 
         Text(text = item.name, Modifier.padding(8.dp))  // 8.dp are preferred to position items
         Text(text = "Qty: ${item.quantity}", Modifier.padding(8.dp))
+
         Row(modifier = Modifier.padding(8.dp)) {
             IconButton(onClick = onEditClick) {
                 Icon(imageVector = Icons.Default.Edit, contentDescription = null)
             }
+
+            /* Icon buttons help people take supplementary actions                       // (13-01-2024)
+            * with a single tap. They’re used when a compact button
+            * is required, such as in a toolbar or image list. */
             IconButton(onClick = onDeleteClick) {
+                /* Icon is a Material Design icon component that draws imageVector      // (13-01-2024)
+                 * using tint, with a default value of LocalContentColor.
+                 * If imageVector has no intrinsic size, this component will
+                 * use the recommended default size. */
                 Icon(imageVector = Icons.Default.Delete, contentDescription = null)
             }
         }
