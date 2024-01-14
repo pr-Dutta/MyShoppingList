@@ -1,6 +1,7 @@
 package com.example.myshoppinglistapp.ui.theme
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,9 +9,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
@@ -83,6 +86,7 @@ fun ShoppingListApp() {
                 Row(modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
+                    /* SpaceBetween gives as mush as space, in between two UI element     - (13-01-2024) */
                     horizontalArrangement = Arrangement.SpaceBetween) {
                     Button(onClick = {  // onClick is an lambda function - (11-01-2024)
                         if (itemName.isNotBlank()) {
@@ -136,15 +140,55 @@ fun ShoppingListApp() {
     }
 }
 
-// (13-01-2024)
+// (13-01-2024)                                     // You have to upload this on Github today
 @Composable
 fun ShoppingItemEditor(
     item: ShoppingItem,
    onEditComplete: (String, Int) -> Unit) {
 
-    val editedName by remember { mutableStateOf(item.name) }
-    val editedQuantity by remember { mutableStateOf(item.quantity.toString()) }
-    val isEditing by remember { mutableStateOf(item.isEditing) }
+    var editedName by remember { mutableStateOf(item.name) }
+    var editedQuantity by remember { mutableStateOf(item.quantity.toString()) }
+    var isEditing by remember { mutableStateOf(item.isEditing) }
+
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .background(Color.White)
+        .padding(8.dp),
+        /* It will give space between Ui element evenly means equally            -- (13-01-2024) */
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        Column {
+            BasicTextField(
+                value = editedName,
+                onValueChange = { editedName = it },
+                singleLine = true,
+                /* wrapContentSize will take only the minimum required size */
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(8.dp)
+            )
+            BasicTextField(
+                value = editedQuantity,
+                onValueChange = { editedQuantity = it },
+                singleLine = true,
+                /* wrapContentSize will take only the minimum required size */
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(8.dp)
+            )
+        }
+        
+        Button(
+            onClick = {
+                isEditing = false
+                onEditComplete(editedName, editedQuantity.toIntOrNull() ?: 1)      // Elvis operator here
+            }
+        ) {
+            Text(text = "Save")
+        }
+        
+    }
+
 }
 
 // (11-01-2024)
@@ -177,11 +221,11 @@ fun ShoppingListItem(
                 Icon(imageVector = Icons.Default.Edit, contentDescription = null)
             }
 
-            /* Icon buttons help people take supplementary actions                       // (13-01-2024)
+            /* Icon buttons help people take supplementary actions  // (13-01-2024) - Have to revise again
             * with a single tap. They’re used when a compact button
             * is required, such as in a toolbar or image list. */
             IconButton(onClick = onDeleteClick) {
-                /* Icon is a Material Design icon component that draws imageVector      // (13-01-2024)
+                /* Icon is a Material Design icon component that draws imageVector  // (13-01-2024) - Have to revise again
                  * using tint, with a default value of LocalContentColor.
                  * If imageVector has no intrinsic size, this component will
                  * use the recommended default size. */
