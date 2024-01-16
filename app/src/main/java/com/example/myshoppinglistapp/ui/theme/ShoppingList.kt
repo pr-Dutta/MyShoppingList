@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +20,6 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -41,7 +41,7 @@ data class ShoppingItem(val id: Int,
                         var isEditing: Boolean = false
 )
 
-@Composable
+@Composable                                         // I have to give more time to understand this
 fun ShoppingListApp() {
     // (04-01-2024) -> have to revise it. - Done
     var sItems by remember{ mutableStateOf(listOf<ShoppingItem>()) }
@@ -73,7 +73,24 @@ fun ShoppingListApp() {
              * are currently visible on the screen*/
             items(sItems) {
                 // How it represents shoppingItem?
-                ShoppingListItem(it, {},{}) // (11-01-2024) What the hell is going on here just understood.
+                //ShoppingListItem(it, {},{}) // (11-01-2024) What the hell is going on here just understood.
+
+
+                // (16-01-2024)
+                item ->
+                if (item.isEditing) {
+                    ShoppingItemEditor(item = item, onEditComplete = {
+                        editedName, editedQuantity ->
+                        sItems = sItems.map { it.copy(isEditing =  false) }
+                        val editedItem = sItems.find { it.id == item.id }       // new function find
+                        editedItem?.let {
+                            it.name = editedName
+                            it.quantity = editedQuantity
+                        }
+                    })
+                }else {
+                    //ShoppingListItem(item = , onEditClick = { /*TODO*/ }) {}
+                }
             }
         }
     }
@@ -180,7 +197,7 @@ fun ShoppingItemEditor(
         
         Button(
             onClick = {
-                isEditing = false
+                isEditing = false // Why we call the onEditComplete function here inside the function itself
                 onEditComplete(editedName, editedQuantity.toIntOrNull() ?: 1)      // Elvis operator here
             }
         ) {
@@ -208,13 +225,16 @@ fun ShoppingListItem(
                 // BorderStroke is a Composable and it creates Border around UI elements. (11-01-2024)
                 border = BorderStroke(2.dp, Color(0XFF018786)),
                 shape = RoundedCornerShape(20)
-            )
+            ),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
 
         // (12-01-2024)
 
-        Text(text = item.name, Modifier.padding(8.dp))  // 8.dp are preferred to position items
-        Text(text = "Qty: ${item.quantity}", Modifier.padding(8.dp))
+        Row(modifier = Modifier.padding(8.dp)) {
+            Text(text = item.name, Modifier.padding(8.dp))  // 8.dp are preferred to position items
+            Text(text = "Qty: ${item.quantity}", Modifier.padding(8.dp))
+        }
 
         Row(modifier = Modifier.padding(8.dp)) {
             IconButton(onClick = onEditClick) {
