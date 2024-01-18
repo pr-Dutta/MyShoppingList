@@ -18,13 +18,28 @@ fun main() {
 //    println(blueRoseVase)
 //    println(redRoseVase)
 
-    // nullable string                                          -- Have to ask chatGpt?
-    val name: String? = "Ella"
+//    // nullable string                                          -- Have to ask chatGpt?
+//    val name: String? = "Ella"
+//
+//    /* If name is null then don't execute below then code for null safety */
+//    name?.let {
+//        println(it.toUpperCase())
+//    }
 
-    /* If name is null then don't execute below then code for null safety */
-    name?.let {
-        println(it.toUpperCase())
+
+    // Have to learn find function - (18-01-2024)
+    val numbers = listOf(1, 2, 3, 20, 5, 6, 7, 8, 9, 10)
+
+    /* Returns the first element matching the given predicate,
+    * or null if no such element was found. */
+    val result = numbers.find { it > 5 }
+
+    if (result != null) {
+        println("First element greater than 5: $result")
+    } else {
+        println("No element greater than 5 found.")
     }
+
 }
 
 data class Vase(val color: String, val design: String)

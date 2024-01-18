@@ -81,6 +81,7 @@ fun ShoppingListApp() {
                 if (item.isEditing) {
                     ShoppingItemEditor(item = item, onEditComplete = {
                         editedName, editedQuantity ->
+                        /* it means individual sItems*/
                         sItems = sItems.map { it.copy(isEditing =  false) }
                         val editedItem = sItems.find { it.id == item.id }       // new function find
                         editedItem?.let {
@@ -88,8 +89,14 @@ fun ShoppingListApp() {
                             it.quantity = editedQuantity
                         }
                     })
-                }else {
-                    //ShoppingListItem(item = , onEditClick = { /*TODO*/ }) {}
+                }else {                                                         // - 18-01-2024
+                    ShoppingListItem(item = item, onEditClick = {
+                        // finding out which item we are edition and changing it's
+                        // "isEditing boolean" to true
+                        sItems = sItems.map { it.copy(isEditing = it.id == item.id) }
+                    }, onDeleteClick = {
+                        sItems = sItems - item
+                    })
                 }
             }
         }
@@ -157,7 +164,7 @@ fun ShoppingListApp() {
     }
 }
 
-// (13-01-2024)                                     // You have to upload this on Github today
+// (13-01-2024)
 @Composable
 fun ShoppingItemEditor(
     item: ShoppingItem,
