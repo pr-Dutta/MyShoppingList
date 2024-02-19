@@ -32,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 // (04-01-2024) -> have to revise it. - Done
@@ -264,7 +265,17 @@ fun ShoppingListItem(
 
 
 
-
+@Preview(
+    showBackground = true,
+    showSystemUi = true,
+    name = "PracticeApp"
+)
+@Composable
+fun MyShoppingListAppPreview() {
+    MyShoppingListAppTheme {
+        ShoppingListApp()
+    }
+}
 
 
 
