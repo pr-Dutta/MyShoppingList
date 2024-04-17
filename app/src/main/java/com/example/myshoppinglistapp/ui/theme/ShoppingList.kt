@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,7 +42,7 @@ data class ShoppingItem(val id: Int,
 )
 
 @Composable                                         // I have to give more time to understand this
-fun ShoppingListApp() {
+fun MyShoppingListApp() {
     // (04-01-2024) -> have to revise it. - Done
     var sItems by remember{ mutableStateOf(listOf<ShoppingItem>()) }
     // If the showDialog is false then the Dialog should be hide else shown
@@ -273,7 +272,7 @@ fun ShoppingListItem(
 @Composable
 fun MyShoppingListAppPreview() {
     MyShoppingListAppTheme {
-        ShoppingListApp()
+        MyShoppingListApp()
     }
 }
 
