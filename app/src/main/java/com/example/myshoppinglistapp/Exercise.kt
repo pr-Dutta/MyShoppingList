@@ -1,6 +1,6 @@
 package com.example.myshoppinglistapp
 
-
+import androidx.compose.ui.text.toUpperCase
 
 // (15-01-2024) - Map, Copy and let/ nullable method
 fun main() {
