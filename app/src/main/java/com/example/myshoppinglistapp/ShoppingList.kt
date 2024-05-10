@@ -77,10 +77,10 @@ fun MyShoppingListApp() {
 
 
                 // (16-01-2024)
-                item ->
+                    item ->
                 if (item.isEditing) {
                     ShoppingItemEditor(item = item, onEditComplete = {
-                        editedName, editedQuantity ->
+                            editedName, editedQuantity ->
                         /* it means individual sItems*/
                         sItems = sItems.map { it.copy(isEditing =  false) }
                         val editedItem = sItems.find { it.id == item.id }       // new function find
@@ -149,7 +149,7 @@ fun MyShoppingListApp() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp)
-                        )
+                    )
                     OutlinedTextField(
                         value = itemQuantity,
                         onValueChange = { itemQuantity = it },
@@ -157,10 +157,10 @@ fun MyShoppingListApp() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp)
-                        )
-                    }
+                    )
                 }
-            )
+            }
+        )
     }
 }
 
@@ -168,7 +168,7 @@ fun MyShoppingListApp() {
 @Composable
 fun ShoppingItemEditor(
     item: ShoppingItem,
-   onEditComplete: (String, Int) -> Unit) {
+    onEditComplete: (String, Int) -> Unit) {
 
     var editedName by remember { mutableStateOf(item.name) }
     var editedQuantity by remember { mutableStateOf(item.quantity.toString()) }
@@ -201,7 +201,7 @@ fun ShoppingItemEditor(
                     .padding(8.dp)
             )
         }
-        
+
         Button(
             onClick = {
                 isEditing = false // Why we call the onEditComplete function here inside the function itself
@@ -210,15 +210,15 @@ fun ShoppingItemEditor(
         ) {
             Text(text = "Save")
         }
-        
+
     }
 
 }
 
 // (11-01-2024)
 @Composable
-/* Here we can pass function and that function will be executed
-* when the ShoppingListItem() fun will call */
+        /* Here we can pass function and that function will be executed
+        * when the ShoppingListItem() fun will call */
 fun ShoppingListItem(
     item: ShoppingItem,
     onEditClick: () -> Unit,        //This is a lambda function - have to learn ask chatGpt? - Done
