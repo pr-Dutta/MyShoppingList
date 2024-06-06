@@ -51,6 +51,24 @@ android {
 
 dependencies {
 
+    // this two are for google map
+    implementation("com.google.maps.android:maps-compose:2.15.0")
+    implementation("com.google.android.gms:play-services-map:18.1.0")
+
+    // this is for viewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+
+    // this is for retrofit - what is it
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
+    // this are for converting json to kotlin object
+    implementation("com.squireup.retrofit2:converter-gson:2.9.0")
+
+    // this is for navigation
+    implementation("androidx.navigation:navigation-compose:2.7.4")
+
+
+
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.2")

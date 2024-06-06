@@ -35,12 +35,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 // (04-01-2024) -> have to revise it. - Done
-data class ShoppingItem(
-    val id: Int,
-    var name: String,
-    var quantity: Int,
-    var isEditing: Boolean = false
-)
+//data class ShoppingItem(
+//    val id: Int,
+//    var name: String,
+//    var quantity: Int,
+//    var isEditing: Boolean = false
+//)
 
 @Composable                                         // I have to give more time to understand this
 fun MyShoppingListApp() {
